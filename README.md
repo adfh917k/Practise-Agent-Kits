@@ -1,47 +1,26 @@
-# Practise-Agent-Kits
 
-科研实践的 Agent kits 集合。
+# 自动根据主题从arxiv爬取论文并分析，随后发布到小红书平台上
+# 郭浩宇 李泽祥 刘一澎
 
-本仓库主要包含下面的工具集合。
+# 1. 克隆或创建项目
+mkdir paper_reading_agent
+cd paper_reading_agent
 
-- crawler: 数据源 & 爬取数据/聚合数据代码
-- middleware: 生成结果的中间件（MCP 协议统一开放）
-- publisher: 发布组件
+# 2. 安装依赖
+pip install mcp arxiv PyPDF2 anthropic python-dotenv zhipuai chromadb Pillow
 
-```mermaid
-flowchart LR
-    subgraph Crawlers["Crawler"]
-        direction LR
-        A1["Crawler A (微博热搜)"]
-        A2["Crawler B (雅虎财经)"]
-        A3["Crawler C (Twitter)"]
-        A4["Crawler D ( ... )"]
-    end
-
-    %% --- 中间层 ---
-    subgraph Middleware["Middleware"]
-        direction LR
-        C1["城市预算获取 MCP"]
-        C2["数据流相关性分析 MCP"]
-        C3["论文摘要流程图生成 MCP"]
-        C4["识别广告/水军 MCP"]
-        C5["..."]
-    end
-
-    %% --- 发布层 ---
-    subgraph Publisher["Publisher"]
-        direction LR
-        P1["GUI Agent"]
-        P2["API"]
-    end
-
-    subgraph Work["Work"]
-        direction LR
-        W1[" <需要每个人单独完成> "]
-    end
+# 3. 配置 API Key
+config 设置 
+ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
+运行需在文件夹下创建文件.env，并指定ANTHROPIC_API_KEY来运行
 
 
-    Crawlers --> DB1["聚合数据"] --> Middleware
+# 5. 运行
+python agent.py
 
-    Middleware --> Work --> Publisher
-```
+### 注意! 请不要使用print, 
+采用def log(msg):  
+    print(msg, file=sys.stderr, flush=True)
+然后:
+    log(".....")
+的方式来打印
